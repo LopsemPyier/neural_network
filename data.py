@@ -10,7 +10,7 @@ def load_images(filename):
 
         buffer = f.read(nb_images * rows * columns)
         data = np.frombuffer(buffer, dtype=np.uint8).astype(np.float32)
-        data = data.reshape(nb_images, rows*columns, 1)
+        data = data.reshape(nb_images, rows*columns)
         data /= 255
         return data
 

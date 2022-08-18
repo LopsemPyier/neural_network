@@ -7,10 +7,13 @@ import data
 def main():
     images = data.load_images("dataset/train-images.idx3-ubyte")
     labels = data.load_labels("dataset/train-labels.idx1-ubyte")
-    
+    n = 60000
 
     ai = AI(constant.layers, constant.f, constant.fprim)
-    print(ai.run(np.random.rand(784)))
+    ai.train(images[:n], labels[:n])
+
+    print(ai.run(images[2]))
+    print(labels[2])
 
 
 if __name__ == '__main__':

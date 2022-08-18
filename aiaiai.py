@@ -1,4 +1,3 @@
-from pkg_resources import _LegacyVersion
 import constant
 import numpy as np
 
@@ -8,8 +7,8 @@ class AI:
         self.f = f
         self.fprim=fprim
         self.layers=layers
-        self.weights = [np.random.rand(layers[i], layers[i-1]) for i in range(1, len(layers))]
-        self.bias = [np.random.rand(layers[i]) for i in range(1, len(layers))]
+        self.weights = [np.random.rand(layers[i], layers[i-1]) * 2 - 1 for i in range(1, len(layers))]
+        self.bias = [np.random.rand(layers[i]) * 2 - 1 for i in range(1, len(layers))]
 
     def generate_nodes_and_sigmaprim(self, inputs): 
         nodes = []
@@ -27,7 +26,7 @@ class AI:
         nodes, sigmaprim=self.generate_nodes_and_sigmaprim(inputs)
         L=len(nodes)-1
         nodes_partials=[2*(nodes[L][j]-expected_result[j]) for j in range(len(nodes[L]))]
-        weights_partials = [np.zeros(self.layers[i], self.layers[i-1]) for i in range(1, len(self.layers))]
+        weights_partials = [np.zeros((self.layers[i], self.layers[i-1])) for i in range(1, len(self.layers))]
         bias_partials = [np.zeros(self.layers[i]) for i in range(1, len(self.layers))]
         for l in range(len(nodes)-1, 0, -1):
             nodes_partialsbis=[0 for _ in range(self.layers[l-1])]
@@ -40,8 +39,8 @@ class AI:
         return weights_partials, bias_partials
 
     def gradient(self, minidataset, minitarget):
-        weights_mean_partials=[np.zeros(self.layers[i], self.layers[i-1]) for i in range(1, len(self.layers))]
-        bias_mean_partials=[np.zeros(self.layers[i]) for i in range(1, len(self.layers))]
+        weights_mean_partials=np.array([np.zeros((self.layers[i], self.layers[i-1])) for i in range(1, len(self.layers))])
+        bias_mean_partials=np.array([np.zeros(self.layers[i]) for i in range(1, len(self.layers))])
         N=len(minidataset)
         for i in range(N):
             weights_partials, bias_partials = self.partial(minidataset[i], minitarget[i])
@@ -57,7 +56,8 @@ class AI:
     def train(self, dataset, targets):
         minidatasets,minitargets = constant.get_minisets(dataset, targets)
         N = len(minidatasets)
-        for i in range(N): 
+        for i in range(N):
+            print(i)
             weights_gradient, bias_gradient = self.gradient(minidatasets[i], minitargets[i])
             self.weights -= weights_gradient
             self.bias -= bias_gradient

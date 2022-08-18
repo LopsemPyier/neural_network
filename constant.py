@@ -19,7 +19,8 @@ def fprim(x):
     return sigmoidprim(x)
 
 def get_minisets(dataset, targets):
-    indexes=shuffle(list(range(len(dataset))))
+    indexes=list(range(len(dataset)))
+    shuffle(indexes)
     minidatasets=[]
     minitargets=[]
     for i in range(len(dataset)//length_miniset):
