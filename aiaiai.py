@@ -3,13 +3,18 @@ import numpy as np
 
 
 class AI:
-    def __init__(self, layers, f, fprim):
+    def __init__(self, layers, f, fprim, weights=None, bias=None):
         self.f = f
         self.fprim = fprim
         self.layers = layers
-        # list of the matrices containing the weights for each layer of the network
-        self.weights = np.array([np.random.rand(layers[i], layers[i - 1]) * 2 - 1 for i in range(1, len(layers))])
-        self.bias = np.array([np.random.rand(layers[i]) * 2 - 1 for i in range(1, len(layers))])  # same for the bias
+        if weights:
+            self.weights = weights 
+        else:
+            self.weights = np.array([np.random.rand(layers[i], layers[i - 1]) * 2 - 1 for i in range(1, len(layers))]) # list of the matrices containing the weights for each layer of the network
+        if bias:
+            self.bias = bias
+        else:
+            self.bias = np.array([np.random.rand(layers[i]) * 2 - 1 for i in range(1, len(layers))])  # same for the bias
 
     # generates the values of the neurones and the sigmaprim values (cf. more explanations) for a certain input
     def generate_nodes_and_sigmaprim(self, inputs):
