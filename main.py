@@ -6,7 +6,7 @@ import data
 
 def main():
     images = data.load_images("dataset/train-images.idx3-ubyte")
-    labels = data.load_labels("dataset/train-labels.idx1-ubyte")
+    labels = data.load_targets("dataset/train-labels.idx1-ubyte")
     n = 60000
 
     ai = AI(constant.layers, constant.f, constant.fprim)
