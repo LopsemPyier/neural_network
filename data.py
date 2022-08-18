@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def load_images(filename):
+def load_images(filename): #load the images from the MNIST data set
     with open(filename, "rb") as f:
         magic_number = int.from_bytes(f.read(4), "big")
         nb_images = int.from_bytes(f.read(4), "big")
@@ -15,7 +15,7 @@ def load_images(filename):
         return data
 
 
-def load_labels(filename):
+def load_labels(filename): #load the labels of the images from the MNIST data set
     with open(filename, "rb") as f:
         magic_number = int.from_bytes(f.read(4), "big")
         nb_labels = int.from_bytes(f.read(4), "big")
